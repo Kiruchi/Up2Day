@@ -2,16 +2,33 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute'
-])
-    .controller('mainController', function($scope, $http) {
+        'ngRoute'
+    ])
+    .controller('mainController', function ($scope, $http) {
 
         // Find geolocation
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position){
-                $scope.$apply(function(){
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.$apply(function () {
                     $scope.position = position;
                     console.log($scope.position);
+
+                    // Load weather
+                    $scope.city = null;
+                    $scope.weather = null;
+
+                    $http.get("http://api.openweathermap.org/data/2.5/weather?APPID=929a9d959a9525b0119016c485eef3d0&units=metric&lat=" + $scope.position.coords.latitude + "&lon=" + $scope.position.coords.longitude)
+                        .then(function onSuccess(response) {
+                            $scope.weather = {};
+                            $scope.city = response.data.name;
+                            $scope.weather.temp = response.data.main.temp;
+                            $scope.weather.desc = response.data.weather[0].description;
+                            $scope.weather.urlImg = "http://openweathermap.org/img/w/" + response.data.weather[0].icon + ".png";
+                            $scope.weather.windSpeed = response.data.wind.speed;
+                        }, function onFailure(response) {
+                            $scope.imageURL = "#";
+                        });
+
 
                     // Load Flicker Image
                     $scope.imageURL = null;
@@ -45,4 +62,4 @@ angular.module('myApp', [
             }, function onFailure(response) {
                 $scope.newsLoaded = 2;
             });
-});
+    });
