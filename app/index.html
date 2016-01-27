@@ -73,7 +73,7 @@
                             Loading...
                         </div>
                         <ul ng-show="newsLoaded == 1">
-                            <li ng-repeat="x in topArticles | limitTo:10">
+                            <li ng-repeat="x in topArticles | limitTo:5">
                                 <a href="{{ x.url }}">{{ x.title }}</a> {{ x.byline }}, {{ x.published_date }}
                             </li>
                         </ul>
@@ -86,10 +86,10 @@
             <div class="col-md-4 infopanel">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <h3 class="panel-title">Flicker Image</h3>
                     </div>
                     <div class="panel-body">
-                        Panel content
+                        <img src="{{ imageURL }}" ng-show="imageURL"/>
                     </div>
                 </div>
             </div>
