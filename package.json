@@ -2,8 +2,8 @@
   "name": "angular-seed",
   "private": true,
   "version": "1.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "See what's going on every day",
+  "repository": "https://github.com/Kiruchi/Up2Day",
   "license": "MIT",
   "engines": {
     "node": "5.5.0",
