@@ -1,8 +1,8 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "name": "up2day",
+  "description": "See what's going on every day",
+  "version": "1.0.0",
+  "homepage": "https://github.com/Kiruchi/Up2Day",
   "license": "MIT",
   "private": true,
   "dependencies": {
