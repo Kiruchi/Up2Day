@@ -62,4 +62,31 @@ angular.module('myApp', [
             }, function onFailure(response) {
                 $scope.newsLoaded = 2;
             });
+
+        // load league table
+
+        // on récupère les différengte leaugue de la saison
+        $scope.leagueLoaded = 0;
+        $scope.leagues = null;
+        $http.get("http://api.football-data.org/v1/soccerseasons/?season=2015", {headers: {'X-Auth-Token': 'bd5a27e1fbf24182b7e7ac478f6a94d7'}})
+            .then(function onSuccess(response) {
+                $scope.leagueLoaded = 1;
+                $scope.leagues = response.data;
+
+                // on récupère le tableau de la ligue
+                $scope.leagues.forEach(function(league)
+                    {
+                        league.leagueTable=null;
+                        $http.get(league._links.leagueTable.href , {headers: {'X-Auth-Token': 'bd5a27e1fbf24182b7e7ac478f6a94d7'}})
+                            .then(function onSuccess(response) {
+                                league.leagueTable=response.data;
+                            }, function onFailure(response) {
+                                league.leagueTable=null;
+                            });
+                    }
+                );
+            }, function onFailure(response) {
+                $scope.leagueLoaded = 2;
+            });
+
     });
