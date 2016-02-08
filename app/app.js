@@ -2,7 +2,8 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-        'ngRoute'
+        'ngRoute',
+        'ui.bootstrap'
     ])
     .controller('mainController', function ($scope, $http) {
 
@@ -61,6 +62,24 @@ angular.module('myApp', [
                 $scope.topArticles = response.data.results;
             }, function onFailure(response) {
                 $scope.newsLoaded = 2;
+            });
+
+        // load best selling books
+        $http.get("http://api.nytimes.com/svc/books/v2/lists/hardcover-fiction?api-key=77d395c71cb7353c60557b185eeafb35:18:74097087")
+            .then(function onSuccess(response) {
+                $scope.booksLoaded = 1;
+                $scope.topBooks = [];
+                for(var i = 0; i < response.data.results.length; i++) {
+                    $scope.topBooks.push({
+                        id: i,
+                        title: response.data.results[i].book_details[0].title,
+                        date: response.data.results[i].published_date,
+                        author: response.data.results[i].book_details[0].author,
+                        image: response.data.results[i].book_details[0].book_image
+                    });
+                }
+            }, function onFailure(response) {
+                $scope.booksLoaded = 2;
             });
 
         // load league table

@@ -15,6 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="app.css">
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -105,10 +106,45 @@
             <div class="col-md-4 infopanel">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <h3 class="panel-title">Best-Selling Books</h3>
                     </div>
                     <div class="panel-body">
-                        Panel content
+                        <div ng-show="booksLoaded == 0">
+                            Loading...
+                        </div>
+                        <div ng-show="booksLoaded == 1">
+                            <uib-carousel interval="5000" no-wrap="noWrapSlides">
+                                <uib-slide ng-repeat="book in topBooks | limitTo:5">
+                                    <div class="col-md-4">
+                                        <img ng-src="{{book.image}}" style="max-height: 100px;"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p style="text-align: left">
+                                            Title: {{book.title}}<br/>
+                                            Author: {{book.author}}<br/>
+                                            Release Date: {{book.date}}
+                                        </p>
+                                    </div>
+                                </uib-slide>
+                            </uib-carousel>
+                            <!--<ul rn-carousel rn-carousel-transition="slide">
+                                <li ng-cd repeat="book in topBooks | limitTo:5" ng-class="'id-' + book.id">
+                                    <div class="col-md-4">
+                                        <img src="{{book.image}}" style="max-height: 100px;"/>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>
+                                            Title: {{book.title}}<br/>
+                                            Author: {{book.author}}<br/>
+                                            Release Date: {{book.date}}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>-->
+                        </div>
+                        <div ng-show="booksLoaded == 2">
+                            Failed to load best-selling books...
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,6 +175,8 @@
 <script src="bower_components/angular/angular.js"></script>
 -->
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="app.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
