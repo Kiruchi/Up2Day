@@ -1,23 +1,99 @@
 /* app css stylesheet */
 
 html {
-    background-color: #f0f0f0;
+    background-color: #EEEEEE;
 }
 
 header {
-    background-color: #252525;
     padding-top: 25px;
-    padding-bottom: 25px;
+    background-color: #dedede;
 }
 
 header h1 {
     color: #ff2c99;
-    font-weight: bold;
-    font-family: "Trebuchet MS", sans-serif;
     font-size: 60px;
 }
 
 .infopanels {
-    padding-top: 10px;
-    background-color: #f0f0f0;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.ng-cloak {
+    display: none;
+}
+
+@-webkit-keyframes spinnerRotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes spinnerRotate {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-ms-keyframes spinnerRotate {
+    from {
+        -ms-transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+    }
+}
+
+.spin {
+    -webkit-animation-name: spinnerRotate;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-name: spinnerRotate;
+    -moz-animation-duration: 3s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: linear;
+}
+
+.icon-space {
+    margin-right: 10px;
+}
+
+.material-icons.md-18 {
+    font-size: 18px;
+}
+
+.material-icons.md-24 {
+    font-size: 24px;
+}
+
+.material-icons.md-36 {
+    font-size: 36px;
+}
+
+.material-icons.md-48 {
+    font-size: 48px;
+}
+
+.carousel-control {
+    background: none !important;
+    color: #2d2d2d !important;
+}
+
+.carousel-control:hover {
+    color: #000 !important;
+}
+
+.carousel-indicators li {
+    background-color: rgba(0, 0, 0, 0.51);
+}
+
+.carousel-indicators .active {
+    background-color: rgba(0, 0, 0, 1);
 }

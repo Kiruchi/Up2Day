@@ -15,11 +15,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="bower_components/angular-bootstrap/ui-bootstrap.min.js">
+    <!-- Material Design fonts -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <!-- Bootstrap -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- Bootstrap Material Design -->
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/bootstrap-material-design.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap-material-design/dist/css/ripples.min.css">
+    <link href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -28,37 +34,46 @@
     <![endif]-->
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
+
+<!-- ng-cloak class + display : none for this class in CSS removes the brief visible angular brackets -->
+<body class="ng-cloak">
 
 <header>
     <div class="container">
         <h1 class="up2dayTitle">Up2Day
             <small class="up2daySubtitle">Discover new things everyday !</small>
         </h1>
-        <a class="btn btn-primary pull-right" href="#" role="button">Settings</a>
+        <a href="javascript:void(0)" class="pull-right btn btn-raised btn-primary"><i class="material-icons icon-space">settings</i>
+            Settings</a>
     </div>
 </header>
 
 <section class="infopanels" ng-controller="mainController">
     <div class="container">
-        <h2>Today, the 27 January, next to {{city}}</h2>
+        <h2><i class="material-icons md-24">today</i> {{date | date:"fullDate"}}, next to {{city}}</h2>
         <br/>
-        <div class="row">
+        <div class="row sortable">
             <div class="col-md-4 infopanel">
-                <div class="panel panel-primary">
+                <div class="panel panel-info" id="weather">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Weather</h3>
+                        <h3 class="panel-title">Weather<i class="material-icons md-18 pull-right">wb_sunny</i></h3>
                     </div>
                     <div class="panel-body">
-                        <div class="row-fluid">
+                        <div ng-hide="weatherLoaded != 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
+                        </div>
+                        <div class="row-fluid" ng-show="weatherLoaded == 1">
                             <div class="col-md-4">
-                                <img src="{{weather.urlImg}}"/>
+                                <img ng-src="{{weather.urlImg}}"/>
                             </div>
                             <div class="col-md-8">
                                 <p>{{weather.temp}}°C<br/>
                                     {{weather.desc}}<br/>
                                     Wind : {{weather.windSpeed}} km/h</p>
                             </div>
+                        </div>
+                        <div ng-show="weatherLoaded == 2">
+                            Failed to load weather...
                         </div>
                     </div>
                 </div>
@@ -74,73 +89,82 @@
                 </div>
             </div>
             <div class="col-md-4 infopanel">
-                <div class="panel panel-default">
+                <div class="panel panel-warning" id="flickerImage">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Top News</h3>
+                        <h3 class="panel-title">Flicker Image next to you<i class="material-icons md-18 pull-right">photo</i>
+                        </h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-show="newsLoaded == 0">
-                            Loading...
+                        <div ng-show="flickrImageLoaded == 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
                         </div>
-                        <ul ng-show="newsLoaded == 1">
-                            <li ng-repeat="x in topArticles | limitTo:5">
-                                <a href="{{ x.url }}">{{ x.title }}</a> {{ x.byline }}, {{ x.published_date }}
-                            </li>
-                        </ul>
-                        <div ng-show="newsLoaded == 2">
-                            Failed to load news...
+                        <a ng-show="flickrImageLoaded == 1" ng-href="{{imageURL}}">
+                            <img class="img-responsive thumbnail" ng-src="{{imageURL}}" ng-show="imageURL"/>
+                        </a>
+                        <div ng-show="flickrImageLoaded == 2">
+                            Failed to load Flickr image...
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4 infopanel">
-                <div class="panel panel-default">
+                <div class="panel panel-success" id="news">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Flicker Image</h3>
+                        <h3 class="panel-title">Top News<i class="material-icons md-18 pull-right">forum</i></h3>
                     </div>
                     <div class="panel-body">
-                        <img src="{{ imageURL }}" ng-show="imageURL"/>
+                        <div ng-show="newsLoaded == 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
+                        </div>
+                        <div ng-show="newsLoaded == 1">
+                            <div class="list-group" ng-repeat="x in topArticles | limitTo:5">
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">description</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <a href="{{x.url}}"><p class="list-group-item-text">{{x.title}}</a><br/>
+                                        <small>{{x.byline}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="list-group-separator"></div>
+                            </div>
+                            <div ng-show="newsLoaded == 2">
+                                Failed to load news...
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 infopanel">
-                <div class="panel panel-default">
+            <div class="col-md-8 infopanel">
+                <div class="panel panel-primary" id="topSellingBooks">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Best-Selling Books</h3>
+                        <h3 class="panel-title">Best-Selling Books<i
+                                class="material-icons md-18 pull-right">bookmark</i>
+                        </h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-show="booksLoaded == 0">
-                            Loading...
+                        <div ng-show="booksLoaded == 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
                         </div>
                         <div ng-show="booksLoaded == 1">
                             <uib-carousel interval="5000" no-wrap="noWrapSlides">
                                 <uib-slide ng-repeat="book in topBooks | limitTo:5">
-                                    <div class="col-md-4">
-                                        <img ng-src="{{book.image}}" style="max-height: 100px;"/>
+                                    <div class="col-md-offset-2 col-md-3">
+                                        <a ng-href="{{book.image}}">
+                                            <img class="img-responsive thumbnail" ng-src="{{book.image}}"/>
+                                        </a>
                                     </div>
-                                    <div class="col-md-8">
-                                        <p style="text-align: left">
-                                            Title: {{book.title}}<br/>
-                                            Author: {{book.author}}<br/>
-                                            Release Date: {{book.date}}
-                                        </p>
+                                    <div class="col-md-offset-1 col-md-6">
+                                        <h2>{{book.title}}<br/>
+                                            <small>by {{book.author}}</small>
+                                        </h2>
+                                        <br/>
+                                        <p>Release Date: {{book.date}}</p>
                                     </div>
                                 </uib-slide>
                             </uib-carousel>
-                            <!--<ul rn-carousel rn-carousel-transition="slide">
-                                <li ng-cd repeat="book in topBooks | limitTo:5" ng-class="'id-' + book.id">
-                                    <div class="col-md-4">
-                                        <img src="{{book.image}}" style="max-height: 100px;"/>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <p>
-                                            Title: {{book.title}}<br/>
-                                            Author: {{book.author}}<br/>
-                                            Release Date: {{book.date}}
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>-->
                         </div>
                         <div ng-show="booksLoaded == 2">
                             Failed to load best-selling books...
@@ -182,5 +206,11 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="bower_components/bootstrap-material-design/dist/js/ripples.min.js"></script>
+<script src="bower_components/bootstrap-material-design/dist/js/material.min.js"></script>
+<script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
+<script type="application/javascript">
+    $.material.init();
+</script>
 </body>
 </html>
