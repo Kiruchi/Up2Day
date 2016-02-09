@@ -16,5 +16,9 @@
     "angular-bootstrap": "~1.1.2",
     "angular-touch": "^1.5.0",
     "bootstrap-material-design": "^0.5.8"
+  },
+  "resolutions": {
+    "angular": ">=1.4.0",
+    "jquery": "~2.2.0"
   }
 }
