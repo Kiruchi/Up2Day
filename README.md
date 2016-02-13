@@ -22,7 +22,7 @@ its package manager (npm) installed.  You can get them from [http://nodejs.org/]
 
 ### Clone Up2Day
 
-Clone the angular-seed repository using [git][git]:
+Clone the Up2Day repository using [git][git]:
 
 ```
 git clone https://github.com/Kiruchi/Up2Day.git
@@ -31,11 +31,11 @@ cd Up2Day
 
 ### Install Dependencies
 
-We have two kinds of dependencies in this project: tools and angular framework code.  The tools help
+We have two kinds of dependencies in this project: tools, angular framework code and libraries.  The tools help
 us manage the application.
 
 * We get the tools we depend upon via `npm`, the [node package manager][npm].
-* We get the angular code via `bower`, a [client-side code package manager][bower].
+* We get the angular/front-end libraries code via `bower`, a [client-side code package manager][bower].
 
 We have preconfigured `npm` to automatically run `bower` so we can simply do:
 
