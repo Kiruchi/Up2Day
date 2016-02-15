@@ -43,36 +43,76 @@
         <h1 class="up2dayTitle">Up2Day
             <small class="up2daySubtitle">Discover new things everyday !</small>
         </h1>
-        <a href="javascript:void(0)" class="pull-right btn btn-raised btn-primary"><i class="material-icons icon-space">settings</i>
+        <a class="pull-right btn btn-raised btn-primary" data-toggle="modal" data-target="#complete-dialog"><i
+                class="material-icons icon-space">settings</i>
             Settings</a>
     </div>
 </header>
 
-<section class="infopanels" ng-controller="mainController">
+<section class="infopanels" ng-controller="mainController as up2day">
+    <div id="complete-dialog" class="modal fade" tabindex="-1" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Choose what you want to see !</p>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="up2day.switchs.weather"> Today's weather
+                        </label>
+                    </div>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="up2day.switchs.flickrImage"> Flickr Image next to you
+                        </label>
+                    </div>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="up2day.switchs.news"> News
+                        </label>
+                    </div>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="up2day.switchs.topSellingBooks"> Top selling books
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            ng-click="up2day.saveInfopanels()">OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
-        <h2><i class="material-icons md-24">today</i> {{date | date:"fullDate"}}, next to {{city}}</h2>
+        <h2><i class="material-icons md-24">today</i> {{up2day.date | date:"fullDate"}}, next to {{up2day.city}}</h2>
         <br/>
         <div class="row sortable">
-            <div class="col-md-4 infopanel">
+            <div class="col-md-4 infopanel" ng-show="up2day.switchs.weather">
                 <div class="panel panel-info" id="weather">
                     <div class="panel-heading">
                         <h3 class="panel-title">Weather<i class="material-icons md-18 pull-right">wb_sunny</i></h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-hide="weatherLoaded != 0" class="text-center">
+                        <div ng-hide="up2day.weatherLoaded != 0" class="text-center">
                             <i class="material-icons spin">autorenew</i>
                         </div>
-                        <div class="row-fluid" ng-show="weatherLoaded == 1">
+                        <div class="row-fluid" ng-show="up2day.weatherLoaded == 1">
                             <div class="col-md-4">
-                                <img ng-src="{{weather.urlImg}}"/>
+                                <img ng-src="{{up2day.weather.urlImg}}"/>
                             </div>
                             <div class="col-md-8">
-                                <p>{{weather.temp}}°C<br/>
-                                    {{weather.desc}}<br/>
-                                    Wind : {{weather.windSpeed}} km/h</p>
+                                <p>{{up2day.weather.temp}}°C<br/>
+                                    {{up2day.weather.desc}}<br/>
+                                    Wind : {{up2day.weather.windSpeed}} km/h</p>
                             </div>
                         </div>
-                        <div ng-show="weatherLoaded == 2">
+                        <div ng-show="up2day.weatherLoaded == 2">
                             Failed to load weather...
                         </div>
                     </div>
@@ -89,35 +129,36 @@
                 </div>
             </div>
             <div class="col-md-4 infopanel">
-                <div class="panel panel-warning" id="flickerImage">
+                <div class="panel panel-warning" id="flickerImage" ng-show="up2day.switchs.flickrImage">
                     <div class="panel-heading">
                         <h3 class="panel-title">Flicker Image next to you<i class="material-icons md-18 pull-right">photo</i>
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-show="flickrImageLoaded == 0" class="text-center">
+                        <div ng-show="up2day.flickrImageLoaded == 0" class="text-center">
                             <i class="material-icons spin">autorenew</i>
                         </div>
-                        <a ng-show="flickrImageLoaded == 1" ng-href="{{imageURL}}">
-                            <img class="img-responsive thumbnail" ng-src="{{imageURL}}" ng-show="imageURL"/>
+                        <a ng-show="up2day.flickrImageLoaded == 1" ng-href="{{up2day.imageURL}}">
+                            <img class="img-responsive thumbnail" ng-src="{{up2day.imageURL}}"
+                                 ng-show="up2day.imageURL"/>
                         </a>
-                        <div ng-show="flickrImageLoaded == 2">
+                        <div ng-show="up2day.flickrImageLoaded == 2">
                             Failed to load Flickr image...
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 infopanel">
+            <div class="col-md-4 infopanel" ng-show="up2day.switchs.news">
                 <div class="panel panel-success" id="news">
                     <div class="panel-heading">
                         <h3 class="panel-title">Top News<i class="material-icons md-18 pull-right">forum</i></h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-show="newsLoaded == 0" class="text-center">
+                        <div ng-show="up2day.newsLoaded == 0" class="text-center">
                             <i class="material-icons spin">autorenew</i>
                         </div>
-                        <div ng-show="newsLoaded == 1">
-                            <div class="list-group" ng-repeat="x in topArticles | limitTo:5">
+                        <div ng-show="up2day.newsLoaded == 1">
+                            <div class="list-group" ng-repeat="x in up2day.topArticles | limitTo:5">
                                 <div class="list-group-item">
                                     <div class="row-action-primary">
                                         <i class="material-icons">description</i>
@@ -130,14 +171,14 @@
                                 </div>
                                 <div class="list-group-separator"></div>
                             </div>
-                            <div ng-show="newsLoaded == 2">
+                            <div ng-show="up2day.newsLoaded == 2">
                                 Failed to load news...
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8 infopanel">
+            <div class="col-md-8 infopanel" ng-show="up2day.switchs.topSellingBooks">
                 <div class="panel panel-primary" id="topSellingBooks">
                     <div class="panel-heading">
                         <h3 class="panel-title">Best-Selling Books<i
@@ -145,12 +186,12 @@
                         </h3>
                     </div>
                     <div class="panel-body">
-                        <div ng-show="booksLoaded == 0" class="text-center">
+                        <div ng-show="up2day.booksLoaded == 0" class="text-center">
                             <i class="material-icons spin">autorenew</i>
                         </div>
-                        <div ng-show="booksLoaded == 1">
+                        <div ng-show="up2day.booksLoaded == 1">
                             <uib-carousel interval="5000" no-wrap="noWrapSlides">
-                                <uib-slide ng-repeat="book in topBooks | limitTo:5">
+                                <uib-slide ng-repeat="book in up2day.topBooks | limitTo:5">
                                     <div class="col-md-offset-2 col-md-3">
                                         <a ng-href="{{book.image}}">
                                             <img class="img-responsive thumbnail" ng-src="{{book.image}}"/>
@@ -166,7 +207,7 @@
                                 </uib-slide>
                             </uib-carousel>
                         </div>
-                        <div ng-show="booksLoaded == 2">
+                        <div ng-show="up2day.booksLoaded == 2">
                             Failed to load best-selling books...
                         </div>
                     </div>
@@ -198,8 +239,9 @@
 <!-- In development you could use:
 <script src="bower_components/angular/angular.js"></script>
 -->
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/angular-touch/angular-touch.js"></script>
+<script src="bower_components/angular-route/angular-route.min.js"></script>
+<script src="bower_components/angular-touch/angular-touch.min.js"></script>
+<script src="bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 <script src="app.js"></script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

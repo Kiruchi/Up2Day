@@ -17,6 +17,11 @@ header h1 {
 .infopanels {
     margin-top: 20px;
     padding-top: 20px;
+
+    -webkit-transition: all ease 1s;
+    -moz-transition: all ease 1s;
+    -o-transition: all ease 1s;
+    transition: all ease 1s;
 }
 
 .ng-cloak {
