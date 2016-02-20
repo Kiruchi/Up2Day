@@ -20,7 +20,7 @@ angular.module('myApp', [
 
         var switchsInStore = localStorageService.get('switchs');
 
-        up2day.switchs = switchsInStore || {weather: true, flickrImage: true, news: true, topSellingBooks: true};
+        up2day.switchs = switchsInStore || {weather: true, flickrImage: true, news: true, topSellingBooks: true, footballScoreBoard: true};
 
         up2day.saveInfopanels = function() {
             localStorageService.set('switchs', up2day.switchs);

@@ -78,6 +78,11 @@
                             <input type="checkbox" ng-model="up2day.switchs.topSellingBooks"> Top selling books
                         </label>
                     </div>
+                    <div class="togglebutton">
+                        <label>
+                            <input type="checkbox" ng-model="up2day.switchs.footballScoreBoard"> Football score board
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -91,7 +96,7 @@
     <div class="container">
         <h2><i class="material-icons md-24">today</i> {{up2day.date | date:"fullDate"}}, next to {{up2day.city}}</h2>
         <br/>
-        <div class="row sortable">
+        <div class="row">
             <div class="col-md-4 infopanel" ng-show="up2day.switchs.weather">
                 <div class="panel panel-info" id="weather">
                     <div class="panel-heading">
@@ -113,112 +118,6 @@
                         </div>
                         <div ng-show="up2day.weatherLoaded == 2">
                             Failed to load weather...
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8 infopanel">
-                <div class="panel panel-info" id="footballScoreBoard">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Football League Score board<i class="material-icons md-18 pull-right">wb_sunny</i></h3>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-hide="up2day.leaguesLoaded != 0" class="text-center">
-                            <i class="material-icons spin">autorenew</i>
-                        </div>
-                        <div class="row-fluid" ng-show="up2day.leaguesLoaded == 1">
-                            <!-- contenu league -->
-                            <ul class="nav nav-tabs">
-                                <li ng-repeat="league in up2day.leagues">
-                                    <a data-toggle="tab" href="#{{league.league}}">{{league.league}}</a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content">
-                                <div ng-repeat="league in up2day.leagues" id="{{league.league}}" class="tab-pane fade">
-                                    <h3>{{league.caption}}</h3>
-                                    <p>Matche  day : {{league.leagueTable.matchday}}</p>
-                                    <div id="title" class="row">
-                                        <div class="col-md-1">Position</div>
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-2">Name</div>
-                                        <div class="col-md-1">Points</div>
-                                        <div class="col-md-1">Played Games</div>
-                                        <div class="col-md-1">Wins</div>
-                                        <div class="col-md-1">Losses</div>
-                                        <div class="col-md-1">Draws</div>
-                                        <div class="col-md-1">Goals</div>
-                                        <div class="col-md-1">Goals Against</div>
-                                        <div class="col-md-1">Goal Difference</div>
-                                    </div>
-                                    <div ng-repeat="team in league.leagueTable.standing" id="team" class="row">
-                                        <div class="col-md-1">{{team.position}}</div>
-                                        <div class="col-md-1"><img class="img-responsive thumbnail" ng-src="{{team.crestURI}}" ng-show="team.crestURI"/></div>
-                                        <div class="col-md-2">{{team.teamName}}</div>
-                                        <div class="col-md-1">{{team.points}}</div>
-                                        <div class="col-md-1">{{team.playedGames}}</div>
-                                        <div class="col-md-1">{{team.wins}}</div>
-                                        <div class="col-md-1">{{team.losses}}</div>
-                                        <div class="col-md-1">{{team.draws}}</div>
-                                        <div class="col-md-1">{{team.goals}}</div>
-                                        <div class="col-md-1">{{team.goalsAgainst}}</div>
-                                        <div class="col-md-1">{{team.goalDifference}}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div ng-show="up2day.leaguesLoaded == 2">
-                            Failed to load scoreboard...
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 infopanel">
-                <div class="panel panel-warning" id="flickerImage" ng-show="up2day.switchs.flickrImage">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Flicker Image next to you<i class="material-icons md-18 pull-right">photo</i>
-                        </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-show="up2day.flickrImageLoaded == 0" class="text-center">
-                            <i class="material-icons spin">autorenew</i>
-                        </div>
-                        <a ng-show="up2day.flickrImageLoaded == 1" ng-href="{{up2day.imageURL}}">
-                            <img class="img-responsive thumbnail" ng-src="{{up2day.imageURL}}"
-                                 ng-show="up2day.imageURL"/>
-                        </a>
-                        <div ng-show="up2day.flickrImageLoaded == 2">
-                            Failed to load Flickr image...
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 infopanel" ng-show="up2day.switchs.news">
-                <div class="panel panel-success" id="news">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Top News<i class="material-icons md-18 pull-right">forum</i></h3>
-                    </div>
-                    <div class="panel-body">
-                        <div ng-show="up2day.newsLoaded == 0" class="text-center">
-                            <i class="material-icons spin">autorenew</i>
-                        </div>
-                        <div ng-show="up2day.newsLoaded == 1">
-                            <div class="list-group" ng-repeat="x in up2day.topArticles | limitTo:5">
-                                <div class="list-group-item">
-                                    <div class="row-action-primary">
-                                        <i class="material-icons">description</i>
-                                    </div>
-                                    <div class="row-content">
-                                        <a href="{{x.url}}"><p class="list-group-item-text">{{x.title}}</a><br/>
-                                        <small>{{x.byline}}</small>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="list-group-separator"></div>
-                            </div>
-                            <div ng-show="up2day.newsLoaded == 2">
-                                Failed to load news...
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,13 +157,119 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 infopanel">
-                <div class="panel panel-default">
+            <div class="col-md-4 infopanel" ng-show="up2day.switchs.news">
+                <div class="panel panel-success" id="news">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
+                        <h3 class="panel-title">Top News<i class="material-icons md-18 pull-right">forum</i></h3>
                     </div>
                     <div class="panel-body">
-                        Panel content
+                        <div ng-show="up2day.newsLoaded == 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
+                        </div>
+                        <div ng-show="up2day.newsLoaded == 1">
+                            <div class="list-group" ng-repeat="x in up2day.topArticles | limitTo:5">
+                                <div class="list-group-item">
+                                    <div class="row-action-primary">
+                                        <i class="material-icons">description</i>
+                                    </div>
+                                    <div class="row-content">
+                                        <a href="{{x.url}}"><p class="list-group-item-text">{{x.title}}</a><br/>
+                                        <small>{{x.byline}}</small>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="list-group-separator"></div>
+                            </div>
+                            <div ng-show="up2day.newsLoaded == 2">
+                                Failed to load news...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 infopanel" ng-show="up2day.switchs.footballScoreBoard">
+                <div class="panel panel-danger" id="footballScoreBoard">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Football League Score board<i class="material-icons md-18 pull-right"><i
+                                class="material-icons">directions_run</i></i></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-hide="up2day.leaguesLoaded != 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
+                        </div>
+                        <div class="row-fluid" ng-show="up2day.leaguesLoaded == 1">
+                            <!-- contenu league -->
+                            <ul class="nav nav-tabs">
+                                <li ng-repeat="league in up2day.leagues">
+                                    <a data-toggle="tab" href="#{{league.league}}">{{league.league}}</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div ng-repeat="league in up2day.leagues" id="{{league.league}}" class="tab-pane fade">
+                                    <h3>{{league.caption}}</h3>
+                                    <p>Match day : {{league.leagueTable.matchday}}</p>
+                                    <table class="table table-striped table-hover ">
+                                        <thead id="title">
+                                        <tr>
+                                            <th>Position</th>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Points</th>
+                                            <th>Played Games</th>
+                                            <th>Wins</th>
+                                            <th>Losses</th>
+                                            <th>Draws</th>
+                                            <th>Goals</th>
+                                            <th>Goals Against</th>
+                                            <th>Goal Difference</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="team in league.leagueTable.standing" id="team">
+                                            <td>{{team.position}}</td>
+                                            <td><img class="img-responsive thumbnail"
+                                                     ng-src="{{team.crestURI}}"
+                                                     ng-show="team.crestURI"/></td>
+                                            <td>{{team.teamName}}</td>
+                                            <td>{{team.points}}</td>
+                                            <td>{{team.playedGames}}</td>
+                                            <td>{{team.wins}}</td>
+                                            <td>{{team.losses}}</td>
+                                            <td>{{team.draws}}</td>
+                                            <td>{{team.goals}}</td>
+                                            <td>{{team.goalsAgainst}}</td>
+                                            <td>{{team.goalDifference}}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="up2day.leaguesLoaded == 2">
+                        Failed to load scoreboard...
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 infopanel">
+                <div class="panel panel-warning" id="flickerImage" ng-show="up2day.switchs.flickrImage">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Flicker Image next to you<i
+                                class="material-icons md-18 pull-right">photo</i>
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div ng-show="up2day.flickrImageLoaded == 0" class="text-center">
+                            <i class="material-icons spin">autorenew</i>
+                        </div>
+                        <a ng-show="up2day.flickrImageLoaded == 1" ng-href="{{up2day.imageURL}}">
+                            <img class="img-responsive thumbnail" ng-src="{{up2day.imageURL}}"
+                                 ng-show="up2day.imageURL"/>
+                        </a>
+                        <div ng-show="up2day.flickrImageLoaded == 2">
+                            Failed to load Flickr image...
+                        </div>
                     </div>
                 </div>
             </div>
