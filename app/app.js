@@ -186,4 +186,5 @@ angular.module('myApp', [
                     up2day.leaguesLoaded = 2;
                 });
 
+        $.material.init();
     });
