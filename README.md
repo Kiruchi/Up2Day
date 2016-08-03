@@ -9,11 +9,9 @@ We are 3 students in 5th year :
 - Pierre MICHEL
 
 ## Getting Started
-
 To get you started you can simply clone the Up2Day repository and install the dependencies:
 
 ### Prerequisites
-
 You need git to clone the Up2Day repository. You can get git from
 [http://git-scm.com/](http://git-scm.com/).
 
@@ -21,7 +19,6 @@ We also use a number of node.js tools to initialize and test Up2Day. You must ha
 its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
 
 ### Clone Up2Day
-
 Clone the Up2Day repository using [git][git]:
 
 ```
@@ -30,7 +27,6 @@ cd Up2Day
 ```
 
 ### Install Dependencies
-
 We have two kinds of dependencies in this project: tools, angular framework code and libraries.  The tools help
 us manage the application.
 
