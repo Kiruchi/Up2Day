@@ -13,14 +13,14 @@
     "html5-boilerplate": "~5.2.0",
     "bootstrap": "~3.3.6",
     "jquery": "~2.2.0",
-    "angular-bootstrap": "~1.1.2",
     "angular-touch": "^1.5.0",
     "bootstrap-material-design": "^0.5.8",
     "angular-local-storage": "^0.2.3",
-    "arrive": "^2.3.0"
+    "arrive": "^2.3.0",
+    "angular-bootstrap": "2.2.0"
   },
   "resolutions": {
-    "angular": "1.5.0",
+    "angular": "~1.5.0",
     "jquery": "~2.2.0"
   }
 }

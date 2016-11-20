@@ -2,11 +2,11 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-        'ngRoute',
-        'ui.bootstrap',
-        'LocalStorageModule'
-    ])
-    .config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    'ngRoute',
+    'ui.bootstrap',
+    'LocalStorageModule'
+])
+    .config(['localStorageServiceProvider', function (localStorageServiceProvider) {
         localStorageServiceProvider.setPrefix('ls');
     }])
     .controller('mainController', function ($http, localStorageService) {
@@ -20,9 +20,15 @@ angular.module('myApp', [
 
         var switchsInStore = localStorageService.get('switchs');
 
-        up2day.switchs = switchsInStore || {weather: true, flickrImage: true, news: true, topSellingBooks: true, footballScoreBoard: true};
+        up2day.switchs = switchsInStore || {
+                weather: true,
+                flickrImage: true,
+                news: true,
+                topSellingBooks: true,
+                footballScoreBoard: true
+            };
 
-        up2day.saveInfopanels = function() {
+        up2day.saveInfopanels = function () {
             localStorageService.set('switchs', up2day.switchs);
         };
 

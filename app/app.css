@@ -78,27 +78,7 @@ header h1 {
     font-size: 24px;
 }
 
-.material-icons.md-36 {
-    font-size: 36px;
-}
-
-.material-icons.md-48 {
-    font-size: 48px;
-}
-
-.carousel-control {
-    background: none !important;
-    color: #2d2d2d !important;
-}
-
-.carousel-control:hover {
-    color: #000 !important;
-}
-
 .carousel-indicators li {
     background-color: rgba(0, 0, 0, 0.51);
 }
 
-.carousel-indicators .active {
-    background-color: rgba(0, 0, 0, 1);
-}
